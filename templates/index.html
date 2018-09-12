@@ -11,19 +11,23 @@
     {% endif %}
     <div class="row">
         <div class="input-field col s12">
-          <input placeholder="Login" id="username" type="text" class="validate" name="username" required>
-          <label for="username">Login</label>
+          <input placeholder="email@email.com" id="email" type="email" class="validate" name="email" required
+                 autocomplete="email">
+          <label for="email">E-mail</label>
         </div>
         <div class="input-field col s12">
-          <input placeholder="password" id="password" type="text" class="validate" name="password" required>
+          <input placeholder="password" id="password" type="password" class="validate" name="password" required
+                 autocomplete="password">
           <label for="password">Hasło</label>
         </div>
         <div class="actions s12">
             <button class="btn waves-effect waves-light custom-green" type="submit" name="action" value="login">Zaloguj się</button>
-              </button>
         </div>
     </div>
-
+    <p> Nie masz jeszcze konta? </p>
+            <div class="actions s12">
+                <a href="/register" class="btn waves-effect waves-light custom-green">Zarejestruj się</a>
+        </div>
     <!--<table>-->
         <!--<p> Aby zagrać musisz być zalogowany </p>-->
         <!--{% if error %}-->

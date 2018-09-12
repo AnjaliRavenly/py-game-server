@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block body %}
+<form name="new_hero" action ="" method="post" >
+    {% if success_add %}
+    <p class="success"><strong>Success:</strong> {{ success_add }}
+        {% endif %}
+        {% if error_add %}
+    <p class="error"><strong>Error:</strong> {{ error_add }}
+        {% endif %}
+<div class="input-field col s12">
+            <input placeholder="Imię bohatera" id="hero_name"  type="text" class="validate" name="hero_name" required>
+            <label for="hero_name">Imię Twojej postaci</label>
+        </div>
+    <div class="input-field col s12">
+    <select name="heroType" required>
+      <option value="" disabled selected>Wybierz typ</option>
+{% for (id, type, points) in characterTypes %}
+    <option value="{{ id }}">{{id}}.{{ type }} - {{ points }}HP</option>
+{% endfor %}
+    </select>
+    <label>Typ bohatera</label>
+  </div>
+
+    <div class="actions s12">
+            <button class="btn waves-effect waves-light custom-green" type="submit" name="action" value="new_hero">Nowy bohater</button>
+        </div>
+          </form>
+    <p> Wróć do listy bohaterów </p>
+            <div class="actions s12">
+                <a href="/bohaterowie" class="btn waves-effect waves-light custom-green">Lista bohaterów</a>
+            </div>
+{% endblock %}

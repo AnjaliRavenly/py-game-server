@@ -11,9 +11,25 @@
 <body>
 <main>
     <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Moja Gra</a></div>
+    <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo">Super gra</a>
+        {% if session['logged_in'] %}
+        <ul class="right">
+            <li><a href="{{url_for('do_logout')}}">Wyloguj się</a></li>
+        </ul>
+        {% endif %}
+    </div>
     </nav>
     <div class="container">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
     {% block body %}
     {% endblock %}
     </div>
@@ -29,5 +45,5 @@
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.js') }}"></script>
-<!--<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>-->
+<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
 </html>

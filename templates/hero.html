@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 
+
 <h2>{{ the_title }}</h2>
 
 <table class="striped highlighted responsive-table">
@@ -21,5 +22,8 @@
     {% endfor %}
     </tbody>
 </table>
+<div class="actions s12">
+                <a href="/character" class="btn waves-effect waves-light custom-green">Dodaj bohatera</a>
+        </div>
 
 {% endblock %}
