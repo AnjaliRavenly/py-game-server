@@ -1,6 +1,7 @@
 # MyGame - serwer gry
 
-To jest projekt z bazy danych na zaliczenie z Teoretycznych Podstaw Informatyki.
+Prosty server do gry pozwalający się użytkownikowy zarejestrować,
+stworzyć własną postać oraz sprawdzić się w rankingu.
 
 ## Jak rozpocząć?
 
@@ -16,7 +17,7 @@ Sprawdź czy masz zainstalowane wszystkie potrzebne narzędzia wymienione w wyma
 | wtyczki do pythona     | wersja   |
 | :--------------------- | -------: |
 | flask                  | ^1.0.2   |
-| mysql-connector-python | ^8.0.11  |
+| mysql-connector        | ^8.0.11  |
  
 #### Co jak nie mam pythona, mysql?
 Linki do instalatorów są [niżej](#links), do pracy z bazą polecam Xamppa.
@@ -63,11 +64,12 @@ Nie jest zalecane uruchamianie projektu w środowisku produkcjnym.
 
 * [PyCharm CE](https://www.jetbrains.com/pycharm/) - IDE do pracy w pythonie.
 * [Xampp](https://www.apachefriends.org/pl/index.html) - środowisko do pracy na lokalnym serwerze
+* [mysql](https://dev.mysql.com/downloads/connector/python/) - baza danych mysql
 * [Python](https://www.python.org/downloads/) - no i sam python ;)
 
 ## Autorzy
 
-* **Anjali Ravenly** 
+* **Anna Rakotna** 
 
 ## License
 

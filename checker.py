@@ -1,4 +1,4 @@
-from flask import session
+from flask import session, redirect, url_for
 from functools import wraps
 
 def check_logged_in(func):
@@ -6,5 +6,5 @@ def check_logged_in(func):
     def wrapper(*args, **kwargs):
         if 'logged_in' in session:
             return func(*args, **kwargs)
-        return 'Nie jestes teraz zalogowany'
+        return redirect(url_for('home'))
     return wrapper

@@ -3,19 +3,17 @@
 
 <h2>{{ the_title }}</h2>
 
-<table>
-    <tr>
-        {% for row_title in the_row_titles %}
-            <th>{{ row_title }}</th>
-        {% endfor %}
-    </tr>
-    {% for log_row in the_data %}
-        <tr>
-            {% for item in log_row %}
-            <td>{{item}}</td>
-            {% endfor %}
-        </tr>
-    {% endfor %}
-</table>
+<div class="center-align">
+    <h5 >Witaj w fascynującym świecie fantasy</h5>
+    <p>Wejdź z nami do świata fantasy i zdobądź tytuł mistrza walcząc na arenie z innymi przeciwnikami.<br>
+    Wojownik, Czarodziejka, Złodzień Łucznik Barbarzyńca i Amazonka - wykreuj swoja najsilniejsza postać i daj się zaskoczyć
+    możliwościami, które przygotowaliśmy specjalnie dla Ciebie. </p>
 
+
+<div class="actions s12">
+                <a href="/log" class="btn waves-effect waves-light custom-green">Zaloguj się</a>
+
+                <a href="/register" class="btn waves-effect waves-light custom-green">Zarejestruj się</a>
+        </div>
+</div>
 {% endblock %}

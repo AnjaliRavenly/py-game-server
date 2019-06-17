@@ -12,18 +12,25 @@
         {% endfor %}
     </tr>
     </thead>
+    <div class="actions s12">
+                <a href="/character" class="btn waves-effect waves-light custom-green">Stwórz bohatera</a>
+                 <a href="/ranking" class="btn waves-effect waves-light custom-green">Ranking bohaterów</a>
+        </div>
     <tbody>
+
     {% for log_row in the_data %}
         <tr>
-            {% for item in log_row %}
-            <td>{{item}}</td>
-            {% endfor %}
+            <td><a href="{{ url_for('hero', id_hero=log_row[0]) }}">{{ log_row[1] }}</a></td>
+
+            <td>{{ log_row[2] }}</td>
+            <td>{{ log_row[3] }}</td>
+
+            <td><a href="{{ url_for('delete', id_hero=log_row[0]) }}" class="btn"><i>delete</i></a></td>
+
         </tr>
     {% endfor %}
     </tbody>
 </table>
-<div class="actions s12">
-                <a href="/character" class="btn waves-effect waves-light custom-green">Dodaj bohatera</a>
-        </div>
+
 
 {% endblock %}

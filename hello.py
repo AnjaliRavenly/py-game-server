@@ -38,9 +38,17 @@ def do_logout()->str:
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
+def home():
+    return render_template('home.html')
+
+
+
+
+
+@app.route('/log', methods=['GET', 'POST'])
 def login()->'html':
     if 'logged_in' in session:
-        return redirect(url_for('view_hero'))
+        return redirect(url_for('hero'))
 
     error = None
 
@@ -62,7 +70,7 @@ def login()->'html':
                         if password_form == row[1]:
                             do_login(email_form, row[0], row[2])
                             flash('Jesteś teraz zalogowany !')
-                            return redirect(url_for('view_hero'))
+                            return redirect(url_for('hero'))
 
                     raise ServerError('Złe hasło')
 
@@ -78,10 +86,13 @@ def login()->'html':
                 print('Coś poszło źle w login', str(err))
                 error = str(err)
 
-    return render_template('index.html', error=error, the_title='Super Gra',)
+    return render_template('log.html', error=error, the_title='Fantasy Game',)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if 'logged_in' in session:
+        return redirect(url_for('hero'))
+
     error_register = None
     success_register = None
     error = None
@@ -110,7 +121,7 @@ def register():
                         row = cursor.fetchone()
                         do_login(email_form, row[0], username_form)
                         flash('Dzięki za rejestrację !')
-                        return redirect(url_for('view_hero'))
+                        return redirect(url_for('hero'))
 
             except ConnectionError as err:
                 print('register nie ma połączenia z bazą ', str(err))
@@ -132,12 +143,12 @@ def register():
 
 @app.route('/hero')
 @check_logged_in
-def view_hero():
+def hero():
     titles = ('Name', 'Typ', 'punkty')
     contents = []
     try:
         with UseDatabase(app.config['dbconfig']) as cursor:
-            _SQL = """select h.name, ht.type, ht.points
+            _SQL = """select h.id, h.name, ht.type, ht.points
                 from heroes h
                 join  hero_types ht on h.hero_type_id=ht.id
                 join users u on h.user_id=u.id
@@ -146,6 +157,8 @@ def view_hero():
             username = str(session['username'])
             cursor.execute(_SQL, (username,))
             contents = cursor.fetchall()
+
+
     except ConnectionError as err:
         print('view_hero nie ma połączenia z bazą ', str(err))
     except SQLError as err:
@@ -157,9 +170,27 @@ def view_hero():
     return render_template('hero.html', the_title='Lista Twoich Bohaterów', the_row_titles=titles,
                            the_data=contents)
 
+
+@app.route('/delete/<id_hero>')
+@check_logged_in
+def delete(id_hero):
+    try:
+        with UseDatabase(app.config['dbconfig']) as cursor:
+            _SQL = """DELETE FROM heroes WHERE id = %s """
+            cursor.execute(_SQL, (id_hero,))
+    except ConnectionError as err:
+        print('delete nie ma połączenia z bazą ', str(err))
+    except SQLError as err:
+        print('Błędne zapytanie w delete', str(err))
+    except Exception as err:
+        print('Coś poszło źle w delete', str(err))
+        return 'Błąd'
+
+    return redirect(url_for("hero"))
+
 @app.route('/character', methods=['GET', 'POST'])
 @check_logged_in
-def add_hero():
+def character():
     error_add = None
     success_add = None
     error = None
@@ -184,7 +215,7 @@ def add_hero():
                         cur.execute(_SQL, ("", id_user, id_hero, heroname_form, None))
                         flash('Twój nowy bohater został dodany')
 
-                        return redirect(url_for('view_hero'))
+                        return redirect(url_for('hero'))
 
             except ConnectionError as err:
                 print('Nie ma połączenia z bazą ', str(err))
@@ -212,6 +243,34 @@ def add_hero():
                            the_title='Stwórz bohatera',
                            characterTypes=characterTypes,
                            error_add=error_add, error=error, success_add=success_add)
+
+
+@app.route('/ranking')
+@check_logged_in
+def ranking():
+    titles = ('Name', 'Typ', 'punkty', "Użytkownik")
+    contents = []
+    try:
+        with UseDatabase(app.config['dbconfig']) as cursor:
+            _SQL = _SQL = """select h.name, ht.type, ht.points, u.username
+                from heroes h
+                join  hero_types ht on h.hero_type_id=ht.id
+                join users u on h.user_id=u.id
+                order by ht.points
+                """
+            cursor.execute(_SQL,)
+            contents = cursor.fetchall()
+    except ConnectionError as err:
+        print('view_hero nie ma połączenia z bazą ', str(err))
+    except SQLError as err:
+        print('Błędne zapytanie w view_hero', str(err))
+    except Exception as err:
+        print('Coś poszło źle w view_hero', str(err))
+        return 'Błąd'
+
+    return render_template('ranking.html', the_title='Ranking Bohaterów', the_row_titles=titles,
+                           the_data=contents)
+
 
 app.secret_key = 'NigdyNieZgadniesz'
 app.run()

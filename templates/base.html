@@ -10,9 +10,9 @@
 </head>
 <body>
 <main>
-    <nav class="light-blue lighten-1" role="navigation">
+    <nav class="green lighten-2" role="navigation">
     <div class="nav-wrapper container">
-        <a id="logo-container" href="#" class="brand-logo">Super gra</a>
+        <a  id="logo-container" href="{{url_for('hero')}}" class="brand-logo">Fantasy Game</a>
         {% if session['logged_in'] %}
         <ul class="right">
             <li><a href="{{url_for('do_logout')}}">Wyloguj się</a></li>
@@ -20,7 +20,8 @@
         {% endif %}
     </div>
     </nav>
-    <div class="container">
+    <div class="center-align">
+        <div class="container">
         {% with messages = get_flashed_messages() %}
           {% if messages %}
             <ul class=flashes>
@@ -30,12 +31,15 @@
             </ul>
           {% endif %}
         {% endwith %}
+        </div>
+    </div>
+    <div class="container">
     {% block body %}
     {% endblock %}
     </div>
 
 </main>
-<footer class="page-footer orange">
+<footer class="page-footer green">
     <div class="footer-copyright">
       <div class="container">
       Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
